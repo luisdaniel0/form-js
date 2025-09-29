@@ -8,7 +8,6 @@ const postalCodeInput = form.elements.postalCode
 const passwordInput = form.elements.password
 const confirmInput = form.elements.confirmPassword
 
-console.log(form,emailInput)
 
 const emailError = emailInput.nextElementSibling
 const countryError = countryInput.nextElementSibling
@@ -149,3 +148,20 @@ passwordInput.addEventListener("blur",(e)=>{
         passwordInput.classList.add("invalid")
     }
 })
+
+confirmInput.addEventListener("blur",(e)=>{
+    const confirmPassword = e.target.value
+    const firstPassword = passwordInput.value
+
+    if(confirmPassword === firstPassword){
+        confirmError.textContent = "";
+        confirmInput.classList.add('valid')
+        confirmInput.classList.remove('invalid')
+    } else{
+        confirmError.textContent="Passwords do not match"
+        confirmInput.classList.add("invalid")
+        confirmInput.classList.remove('valid')
+    }
+
+})
+
