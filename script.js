@@ -54,3 +54,98 @@ emailInput.addEventListener("blur",(e)=>{
 
 }
 })
+
+function validateCountry(country){
+    if(country === ""){
+        return false
+    }
+    return /^[a-zA-Z\s]+$/.test(country)  // this already returns true/false
+}
+
+countryInput.addEventListener("blur",(e)=>{
+    const userCountry = e.target.value
+    if(validateCountry(userCountry)===true){
+        countryError.textContent="";
+        countryInput.classList.add("valid");
+        countryInput.classList.remove("invalid");
+
+    } else{
+        countryError.textContent="Please enter a valid country";
+        countryInput.classList.remove("valid");
+        countryInput.classList.add("invalid")
+    }
+})
+
+function validatePostalCode(postalCode){
+    const allowedCharacters="0123456789abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+    if(postalCode==="")
+        return false
+
+    if(postalCode.length < 3){
+        return false
+    }
+
+    for(let char of postalCode){
+        if(!allowedCharacters.includes(char)){
+            return false;
+        }
+    }
+    return true;
+}
+
+postalCodeInput.addEventListener("blur",(e)=>{
+    const userPostalCode = e.target.value
+    if(validatePostalCode(userPostalCode)===true){
+        postalCodeError.textContent="";
+        postalCodeInput.classList.add("valid")
+        postalCodeInput.classList.remove("invalid")
+    } else{
+        postalCodeError.textContent="Please enter a valid postal code"
+        postalCodeInput.classList.remove("valid")
+        postalCodeInput.classList.add("invalid")
+    }
+})
+
+function validatePassword(password){
+    const specialChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+
+    if(password==="") return false;
+    if(password.length < 7) return false;
+
+    let hasUpper = false;
+    let hasSpecial = false;
+    let hasNumber = false;
+
+    for(let char of password){
+        if(char>= "A" && char<="Z"){
+            hasUpper = true;
+        }
+        if(specialChars.includes(char)){
+            hasSpecial = true
+        }
+        if(char>="0" && char <="9"){
+            hasNumber = true;
+        }
+        if(hasUpper && hasSpecial && hasNumber){
+            break
+        }
+    }
+
+    return hasUpper && hasSpecial && hasNumber;
+
+}
+
+passwordInput.addEventListener("blur",(e)=>{
+    const userPassword = e.target.value
+
+    if(validatePassword(userPassword)=== true){
+        passwordError.textContent="";
+        passwordInput.classList.add("valid")
+        passwordInput.classList.remove("invalid")
+    } else{
+        passwordError.textContent="Please enter a valid Password: 1 uppercase, 1 number, and 1 special character"
+        passwordInput.classList.remove("valid")
+        passwordInput.classList.add("invalid")
+    }
+})
