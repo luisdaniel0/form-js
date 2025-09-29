@@ -1,6 +1,12 @@
 //form with 5 inputs (email, country, postal code, password, password confirmation), live inline validation, highlight field in red 
 // when its invalid and show error mesage to guide user
 
+const messageDiv = document.createElement('div')
+const formGrid = document.querySelector('.form-grid')
+messageDiv.className='form-message'
+formGrid.appendChild(messageDiv)
+
+
 const form = document.querySelector('#form')
 const emailInput = form.elements.email
 const countryInput  = form.elements.country
@@ -14,6 +20,7 @@ const countryError = countryInput.nextElementSibling
 const postalCodeError=postalCodeInput.nextElementSibling
 const passwordError = passwordInput.nextElementSibling
 const confirmError = confirmInput.nextElementSibling
+const submit = document.querySelector('.submit-btn')
 
 function validateEmail(email){
     if(email===""){
@@ -165,3 +172,25 @@ confirmInput.addEventListener("blur",(e)=>{
 
 })
 
+form.addEventListener("submit",(e)=>{
+    e.preventDefault()
+
+
+
+    const isEmailValid = validateEmail(emailInput.value)
+    const isCountryValid = validateCountry(countryInput.value)
+    const isPostalCodeValid= validatePostalCode(postalCodeInput.value)
+    const isPasswordValid = validatePassword(passwordInput.value)
+    const isConfirmedValid = (confirmInput.value !== "" && confirmInput.value ===passwordInput.value)
+
+    if(isEmailValid && isCountryValid && isPostalCodeValid && isPasswordValid && isConfirmedValid){
+        messageDiv.textContent="Sucess! High Five!";
+        messageDiv.className="form-message success";
+        
+        
+    } else{
+        messageDiv.textContent="Please correct all errors!"
+        messageDiv.className="form-message error"
+        
+    }
+})
